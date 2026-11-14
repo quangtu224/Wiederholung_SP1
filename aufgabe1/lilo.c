@@ -7,11 +7,43 @@ struct Node
 	int value;
 	struct Node *next;
 };
+typedef struct Node Node;
+static struct Node *head = NULL;
 
 int insertElement(int value)
 {
 	// TODO: implement me!
-	return -1;
+	if (value < 0)
+	{
+		return -1;
+	}
+	Node *current = head;
+	Node *previous = NULL;
+	while (current != NULL)
+	{
+		if (current->value == value)
+		{
+			return -1;
+		}
+		previous = current;
+		current = current->next;
+	}
+	Node *newElement = malloc(sizeof(Node));
+	if (newElement == NULL)
+	{
+		return -1;
+	}
+	newElement->value = value;
+	newElement->next = NULL;
+	if (previous == NULL)
+	{
+		head = newElement;
+	}
+	else
+	{
+		previous->next = newElement;
+	}
+	return value;
 }
 
 int removeElement(void)
