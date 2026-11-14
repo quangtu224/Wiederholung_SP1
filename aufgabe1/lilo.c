@@ -48,8 +48,15 @@ int insertElement(int value)
 
 int removeElement(void)
 {
-	// TODO: implement me!
-	return -1;
+	if (head == NULL)
+	{
+		return -1;
+	}
+	Node *temp = head;
+	int value = temp->value;
+	head = head->next;
+	free(temp);
+	return value;
 }
 
 int main(void)
