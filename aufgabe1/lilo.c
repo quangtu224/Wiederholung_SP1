@@ -2,18 +2,26 @@
 #include <stdlib.h>
 
 // TODO: structs, global variables, etc.
+struct Node
+{
+	int value;
+	struct Node *next;
+};
 
-int insertElement(int value) {
+int insertElement(int value)
+{
 	// TODO: implement me!
 	return -1;
 }
 
-int removeElement(void) {
+int removeElement(void)
+{
 	// TODO: implement me!
 	return -1;
 }
 
-int main(void) {
+int main(void)
+{
 	printf("insert 47: %d\n", insertElement(47));
 	printf("insert 11: %d\n", insertElement(11));
 	printf("insert 23: %d\n", insertElement(23));
