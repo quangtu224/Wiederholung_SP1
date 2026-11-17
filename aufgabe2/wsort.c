@@ -28,12 +28,7 @@ static char **read_lines(size_t *num_lines)
 {
   size_t size = 0;
   char **lines = NULL;
-  char *buffer = malloc((MAX_LENGTH_WORD + 1) * sizeof(char)); // +1 for null terminator
-  if (buffer == NULL)
-  {
-    perror("malloc");
-    exit(EXIT_FAILURE);
-  }
+  char buffer[MAX_LENGTH_WORD + 1]; // +1 for null terminator; on stack, so nothing to free
   size_t len_word = 0; // Length of the current word
   int too_long = 0;    // Flag to indicate if the word is too long
   for (;;)
