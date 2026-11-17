@@ -26,7 +26,8 @@ static void freeWords(char **words, size_t num_words)
 // Function reads input words into an array
 static char **read_lines(size_t *num_lines)
 {
-  size_t size = 0;
+  size_t size = 0;     // number of stored words
+  size_t capacity = 0; // number of slots allocated in lines
   char **lines = NULL;
   char buffer[MAX_LENGTH_WORD + 1]; // +1 for null terminator; on stack, so nothing to free
   size_t len_word = 0; // Length of the current word
@@ -52,15 +53,21 @@ static char **read_lines(size_t *num_lines)
           freeWords(lines, size);
           exit(EXIT_FAILURE);
         }
-        char **new = realloc(lines, (size + 1) * sizeof(char *));
-        if (new == NULL)
+        // Array full: double capacity so realloc runs only O(log n) times
+        if (size == capacity)
         {
-          perror("realloc");
-          free(word);
-          freeWords(lines, size);
-          exit(EXIT_FAILURE);
+          size_t new_capacity = (capacity == 0) ? 16 : capacity * 2;
+          char **new = realloc(lines, new_capacity * sizeof(char *));
+          if (new == NULL)
+          {
+            perror("realloc");
+            free(word);
+            freeWords(lines, size);
+            exit(EXIT_FAILURE);
+          }
+          lines = new;
+          capacity = new_capacity;
         }
-        lines = new;
         lines[size++] = word;
       }
       // Reset for the next line
