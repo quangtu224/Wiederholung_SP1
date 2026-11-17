@@ -99,27 +99,27 @@ static char **read_lines(size_t *num_lines)
   return lines;
 }
 
-static void print_words(char **words, size_t size)
+static void printWords(char **words, size_t size)
 {
   for (size_t i = 0; i < size; i++)
   {
     if (fputs(words[i], stdout) == EOF)
     {
       perror("fputs");
-      free_words(words, size);
+      freeWords(words, size);
       exit(EXIT_FAILURE);
     }
     if (fputc('\n', stdout) == EOF)
     {
       perror("fputc");
-      free_words(words, size);
+      freeWords(words, size);
       exit(EXIT_FAILURE);
     }
   }
   if (fflush(stdout) == EOF)
   {
     perror("fflush");
-    free_words(words, size);
+    freeWords(words, size);
     exit(EXIT_FAILURE);
   }
 }
@@ -129,7 +129,7 @@ int main(void)
   size_t num_lines = 0;
   char **lines = read_lines(&num_lines);
   qsort(lines, num_lines, sizeof(char *), compare);
-  print_words(lines, num_lines);
+  printWords(lines, num_lines);
   freeWords(lines, num_lines);
   return EXIT_SUCCESS;
 }
